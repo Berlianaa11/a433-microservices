@@ -1,0 +1,28 @@
+#Menyatakan bahwa Docker Compose menggunakan versi 2
+version: '2'
+
+services:
+  item-app:
+    #Perintah untuk menggunakan image dari Docker Hub
+    image: berlianaa/item-app:v1
+    #Perintah untuk melakukan port mapping agar dapat diakses dari port 80 di host
+    ports:
+      - "80:8080"
+    #Perintah untuk memastikan item-app hanya berjalan setelah item-db diluncurkan
+    depends_on:
+      - item-db
+    #Perintah agar container selalu melakukan restart ketika terhenti
+    restart: always
+
+  item-db:
+    #Perintah untuk menggunakan image dari Docker Hub yaitu image mongo dengan tag 3
+    image: mongo:3
+    #Perintah untuk memakai volume bernama app-db dengan target /data/db di container
+    volumes:
+      - app-db:/data/db
+    #Perintah agar container selalu melakukan restart ketika terhenti
+    restart: always
+
+volumes:
+  #Perintah untuk membuat volume bernama app-db
+  app-db:
