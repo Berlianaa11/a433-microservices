@@ -1,0 +1,45 @@
+#Perintah untuk menggunakan docker compose yaitu versi 3.2
+version: '3.2'
+services:
+  order-service:
+    #Perintah untuk menggunakan image dari github packages
+    image: docker.pkg.github.com/berlianaa11/e-commerce-app/order-service:latest
+
+    #Mengatur agar app dapat diakses dengan port 3000 di host
+    ports:
+      - 3000:3000
+
+    #Membuat environment variable
+    environment:
+      - PORT=3000
+      - AMQP_URL=amqp://rabbitmq:5672
+
+    #Mengatur order-service membutuhkan rabbitmq untuk bisa berjalan
+    depends_on:
+      - rabbitmq
+
+  shipping-service:
+    #Perintah untuk menggunakan image dari github packages
+    image: docker.pkg.github.com/berlianaa11/e-commerce-app/shipping-service:latest
+
+    #Mengatur agar app dapat diakses dengan port 3001 di host
+    ports:
+      - 3001:3001
+
+    #Membuat environment variable
+    environment:
+      - PORT=3001
+      - AMQP_URL=amqp://rabbitmq:5672
+
+    #Mengatur shipping-service membutuhkan order-service untuk bisa berjalan
+    depends_on:
+      - order-service
+      
+  rabbitmq:
+    #Perintah untuk menggunakan image dari rabbitmq dengan versi 3.11
+    image: rabbitmq:3.11-management
+
+    #Perintah untuk mengatur port untuk dipakai ketika dijalankan
+    ports:
+      - 5672:5672
+      - 15672:15672
