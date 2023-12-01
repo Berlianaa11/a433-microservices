@@ -3,7 +3,7 @@ version: '3.2'
 services:
   order-service:
     #Perintah untuk menggunakan image dari github packages
-    image: ghcr.io/berlianaa11/order-service:latest
+    image: ghcr.io/berlianaa11/e-commerce-app/order-service:latest
 
     #Mengatur agar app dapat diakses dengan port 3000 di host
     ports:
@@ -20,7 +20,7 @@ services:
 
   shipping-service:
     #Perintah untuk menggunakan image dari github packages
-    image: ghcr.io/berlianaa11/shipping-service:latest
+    image: ghcr.io/berlianaa11/e-commerce-app/shipping-service:latest
 
     #Mengatur agar app dapat diakses dengan port 3001 di host
     ports:
